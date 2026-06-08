@@ -33,5 +33,5 @@ Skill Space/
 
 1. Pastikan sudah menginstall PHP atau XAMPP/Laragon
 2. Clone repository ini
-3. Jalankan local server (contoh: `php -S localhost:8000`)
-4. Buka `http://localhost:8000` di browser
+3. Jika menggunakan XAMPP (Pastikan folder skillspace berada di xampp/htdocs)
+4. Buka `http://localhost/skillspace` di browser
