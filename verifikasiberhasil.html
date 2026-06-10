@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSpace - Verifikasi Berhasil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #8e8e93; /* Latar belakang luar abu-abu */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container Utama */
+        .app-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 390px;
+            height: 844px;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Membuat semua konten simetris di tengah */
+            align-items: center;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-radius: 16px;
+        }
+
+        /* Icon Sukses Hijau Bulat Sesuai Gambar */
+        .success-icon-wrapper {
+            width: 100px;
+            height: 100px;
+            background-color: #00d254; /* Warna hijau cerah dari mockup */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            font-size: 50px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0, 210, 84, 0.2);
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .success-desc {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+            text-align: center;
+            max-width: 280px;
+            margin-bottom: 40px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background-color: #4a3aff;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #3525e6;
+        }
+
+        /* --- MEDIA QUERIES (Sistem Otomatis Responsif HP) --- */
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+                background-color: #fff;
+            }
+
+            .app-container {
+                max-width: 100%;
+                height: 100vh;
+                box-shadow: none;
+                border-radius: 0;
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <div class="success-icon-wrapper">
+            <i class="fa-solid fa-check"></i>
+        </div>
+
+        <h2 class="success-title">Verifikasi Berhasil</h2>
+        
+        <p class="success-desc">
+            Akun kamu berhasil diverifikasi. Sekarang kamu bisa mulai melihat berbagai jasa mahasiswa
+        </p>
+
+        <a href="masuk.html" class="btn-primary">Masuk ke SkillSpace</a>
+
+    </div>
+
+</body>
+</html>

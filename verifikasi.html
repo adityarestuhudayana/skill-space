@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSpace - Verifikasi Akun</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #8e8e93; /* Latar belakang luar abu-abu */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container Utama */
+        .app-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 390px;
+            height: 844px;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-radius: 16px;
+        }
+
+        .back-btn {
+            color: #4a3aff;
+            font-size: 22px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-bottom: 25px;
+            align-self: flex-start;
+            text-decoration: none;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .page-desc {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 35px;
+        }
+
+        /* OTP Input Kotak-Kotak */
+        .otp-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .otp-input {
+            width: 55px;
+            height: 55px;
+            background-color: #d9d9d9;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #000;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .otp-input:focus {
+            background-color: #fff;
+            border-color: #4a3aff;
+            box-shadow: 0 0 0 3px rgba(74, 58, 255, 0.15);
+        }
+
+        .countdown-text {
+            text-align: center;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background-color: #4a3aff;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #3525e6;
+        }
+
+        .footer-action {
+            text-align: center;
+            font-size: 13px;
+            color: #000;
+            margin-top: auto;
+        }
+
+        .footer-action a {
+            color: #4a3aff;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* --- MEDIA QUERIES (Sistem Otomatis Responsif HP) --- */
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+                background-color: #fff;
+            }
+
+            .app-container {
+                max-width: 100%;
+                height: 100vh;
+                box-shadow: none;
+                border-radius: 0;
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <a href="daftar.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+
+        <h2 class="page-title">Verifikasi Akun</h2>
+        <p class="page-desc">Kami telah mengirimkan kode verifikasi ke<br><strong>221450661018@unsap.ac.id</strong></p>
+
+        <form onsubmit="window.location.href='verifikasi-berhasil.html'; return false;">
+            <div class="otp-container">
+                <input type="text" class="otp-input" maxlength="1" required>
+                <input type="text" class="otp-input" maxlength="1" required>
+                <input type="text" class="otp-input" maxlength="1" required>
+                <input type="text" class="otp-input" maxlength="1" required>
+            </div>
+
+            <p class="countdown-text">Kirim ulang kode dalam 00:30</p>
+
+            <button type="submit" class="btn-primary">Verifikasi</button>
+        </form>
+
+        <div class="footer-action">
+            Tidak Menerima Kode? <a href="#">Kirim Ulang</a>
+        </div>
+    </div>
+
+</body>
+</html>

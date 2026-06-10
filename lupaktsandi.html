@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSpace - Reset Kata Sandi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #8e8e93; /* Latar belakang luar abu-abu */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container Utama Mobile Screen */
+        .app-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 390px;
+            height: 844px;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-radius: 16px;
+        }
+
+        .back-btn {
+            color: #4a3aff;
+            font-size: 22px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-bottom: 25px;
+            align-self: flex-start;
+            text-decoration: none;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .page-desc {
+            font-size: 13px;
+            color: #000;
+            line-height: 1.5;
+            margin-bottom: 35px;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 8px;
+        }
+
+        .input-control {
+            width: 100%;
+            background-color: #d9d9d9;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 15px;
+            font-size: 13px;
+            color: #333;
+            outline: none;
+        }
+
+        .input-control::placeholder {
+            color: #757575;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background-color: #4a3aff;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .btn-primary:hover {
+            background-color: #3525e6;
+        }
+
+        /* --- MEDIA QUERIES (Sistem Otomatis Responsif HP) --- */
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+                background-color: #fff;
+            }
+
+            .app-container {
+                max-width: 100%;
+                height: 100vh;
+                box-shadow: none;
+                border-radius: 0;
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <a href="masuk.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+
+        <h2 class="page-title">Reset Kata Sandi</h2>
+        <p class="page-desc">
+            Masukkan email yang terdaftar pada akun Anda. Kami akan mengirimkan kode verifikasi untuk mengatur ulang kata sandi
+        </p>
+
+        <form onsubmit="window.location.href='verifikasi.html'; return false;">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="input-control" placeholder="Masukkan Email" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Kirim Kode Verifikasi</button>
+        </form>
+    </div>
+
+</body>
+</html>

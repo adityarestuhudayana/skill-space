@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSpace - Buat Kata Sandi Baru</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #8e8e93; /* Latar belakang luar abu-abu */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container Utama Mobile Screen */
+        .app-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 390px;
+            height: 844px;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-radius: 16px;
+        }
+
+        .back-btn {
+            color: #4a3aff;
+            font-size: 22px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-bottom: 25px;
+            align-self: flex-start;
+            text-decoration: none;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .page-desc {
+            font-size: 13px;
+            color: #000;
+            line-height: 1.5;
+            margin-bottom: 35px;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-control {
+            width: 100%;
+            background-color: #d9d9d9;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 45px 14px 15px; /* Memberi ruang di kanan untuk ikon mata */
+            font-size: 13px;
+            color: #333;
+            outline: none;
+        }
+
+        .input-control::placeholder {
+            color: #757575;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            color: #666;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background-color: #4a3aff;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .btn-primary:hover {
+            background-color: #3525e6;
+        }
+
+        /* --- MEDIA QUERIES (Sistem Otomatis Responsif HP) --- */
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+                background-color: #fff;
+            }
+
+            .app-container {
+                max-width: 100%;
+                height: 100vh;
+                box-shadow: none;
+                border-radius: 0;
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <a href="verifikasi.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+
+        <h2 class="page-title">Buat Kata Sandi Baru</h2>
+        <p class="page-desc">
+            Gunakan kata sandi baru yang berbeda untuk menjaga keamanan akun Anda.
+        </p>
+
+        <form onsubmit="window.location.href='masuk.html'; return false;">
+            
+            <div class="form-group">
+                <label>Kata Sandi</label>
+                <div class="input-wrapper">
+                    <input type="password" class="input-control" placeholder="Masukkan Kata Sandi Baru" required>
+                    <i class="fa-regular fa-eye-slash toggle-password"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Ulangi Kata Sandi</label>
+                <div class="input-wrapper">
+                    <input type="password" class="input-control" placeholder="Masukkan Ulang Kata Sandi Baru" required>
+                    <i class="fa-regular fa-eye-slash toggle-password"></i>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary">Simpan</button>
+        </form>
+    </div>
+
+</body>
+</html>

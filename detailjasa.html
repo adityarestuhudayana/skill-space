@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSpace - Detail Jasa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #8e8e93; /* Latar belakang abu-abu luar sesuai screenshot */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container Utama Aplikasi (Membentuk Frame HP di Desktop) */
+        .app-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 390px; /* Lebar layar mobile */
+            height: 844px; /* Tinggi layar mobile */
+            position: relative;
+            display: flex;
+            flex-direction: column; /* Menyusun konten secara vertikal */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-radius: 16px; /* Opsional: Sudut melengkung halus di desktop agar estetik */
+            overflow: hidden; /* Memastikan elemen di dalam tidak keluar dari border radius */
+        }
+
+        /* AREA SCROLL: Hanya bagian ini yang bisa di-scroll ke bawah */
+        .scrollable-content {
+            flex: 1; /* Mengambil semua ruang yang tersedia di atas bottom bar */
+            overflow-y: auto; /* Mengaktifkan scroll vertikal hanya untuk konten ini */
+            width: 100%;
+        }
+
+        /* Menyembunyikan atau memperhalus scrollbar bawaan browser */
+        .scrollable-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        .scrollable-content::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
+        /* Bagian Gambar Utama & Header Atas */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 250px;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .action-overlay {
+            position: absolute;
+            top: 30px; /* Disesuaikan posisinya karena status bar sudah dihapus */
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 5;
+        }
+
+        .icon-btn {
+            width: 35px;
+            height: 35px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #4a3aff;
+            text-decoration: none;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .right-icons {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Konten Teks di dalam Scroll */
+        .content-body {
+            padding: 20px;
+        }
+
+        /* Judul Jasa */
+        .jasa-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .jasa-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .badge-status {
+            background-color: #e6f9f0;
+            color: #10b981;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            border: 1px solid #10b981;
+        }
+
+        .rating-sales {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .rating-star {
+            color: #ffb800;
+            font-weight: bold;
+        }
+
+        .rating-star i {
+            margin-right: 3px;
+        }
+
+        /* Paket Harga */
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 12px;
+        }
+
+        .card-paket {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 12px;
+            background-color: #fff;
+        }
+
+        .card-paket.active {
+            border-color: #4a3aff;
+            background-color: #eef0ff;
+        }
+
+        .paket-header {
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .paket-header strong {
+            color: #000;
+        }
+
+        .paket-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .paket-harga {
+            font-size: 14px;
+            font-weight: 700;
+            color: #4a3aff;
+        }
+
+        .paket-durasi {
+            font-size: 12px;
+            color: #4a3aff;
+            font-weight: 500;
+        }
+
+        /* Tentang Jasa */
+        .tentang-text {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .list-bisa {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .list-bisa li {
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .list-bisa li i {
+            color: #4a3aff;
+        }
+
+        /* Profile Card Freelancer */
+        .profile-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 50px;
+            height: 50px;
+        }
+
+        .profile-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .online-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #10b981;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+        }
+
+        .profile-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .profile-major {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 2px;
+        }
+
+        .profile-status-badge {
+            font-size: 11px;
+            color: #4a3aff;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+            padding: 10px 0;
+            margin-bottom: 15px;
+        }
+
+        .stat-item .stat-val {
+            font-size: 13px;
+            font-weight: 700;
+            color: #4a3aff;
+        }
+
+        .stat-item .stat-lbl {
+            font-size: 10px;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .btn-outline-profile {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #4a3aff;
+            color: #4a3aff;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* Ulasan */
+        .ulasan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .btn-link-all {
+            font-size: 12px;
+            color: #4a3aff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .ulasan-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 14px;
+            background-color: #fff;
+        }
+
+        .ulasan-user {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-initial {
+            width: 35px;
+            height: 35px;
+            background-color: #ffbb96;
+            color: #ff5c00;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .user-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .user-major {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .stars {
+            color: #ffb800;
+            font-size: 11px;
+        }
+
+        .ulasan-comment {
+            font-size: 12px;
+            color: #444;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        /* FIXED BOTTOM ACTION BAR (Selalu mengunci di bawah) */
+        .bottom-bar {
+            width: 100%;
+            background-color: #ffffff;
+            border-top: 1px solid #e0e0e0;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+
+        .btn-secondary-action {
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0; /* Mencegah tombol ikon gepeng */
+            border: 1px solid #dcdcdc;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+            background-color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .btn-order-now {
+            flex: 1; /* Mengisi seluruh sisa ruang secara merata */
+            height: 44px; /* Tinggi sejajar dengan tombol ikon */
+            background-color: #4a3aff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            white-space: nowrap; /* Mencegah teks terpotong ke bawah */
+        }
+
+        /* --- MEDIA QUERIES (Sistem Otomatis Responsif) --- */
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+                background-color: #fff;
+            }
+
+            .app-container {
+                max-width: 100%;
+                height: 100vh;
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .action-overlay {
+                top: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <div class="scrollable-content">
+            
+            <div class="hero-section">
+                <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=600&auto=format&fit=crop" class="hero-img" alt="Coding">
+                <div class="action-overlay">
+                    <a href="#" class="icon-btn"><i class="fa-solid fa-arrow-left"></i></a>
+                    <div class="right-icons">
+                        <a href="#" class="icon-btn"><i class="fa-regular fa-heart"></i></a>
+                        <a href="#" class="icon-btn"><i class="fa-solid fa-share-nodes"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <div class="jasa-header">
+                    <h1 class="jasa-title">Bantuan Coding</h1>
+                    <span class="badge-status">Tersedia</span>
+                </div>
+
+                <div class="rating-sales">
+                    <span><span class="rating-star"><i class="fa-solid fa-star"></i> 4.9</span> (545 Ulasan)</span>
+                    <span>825 Terjual</span>
+                </div>
+
+                <h3 class="section-title">Paket Harga</h3>
+                
+                <div class="card-paket">
+                    <div class="paket-header">
+                        <strong>Basic</strong> - Coding sederhana & Fix error ringan
+                    </div>
+                    <div class="paket-footer">
+                        <span class="paket-harga">Rp 30.000</span>
+                        <span class="paket-durasi"><i class="fa-regular fa-clock"></i> 1-2 hari</span>
+                    </div>
+                </div>
+
+                <div class="card-paket active">
+                    <div class="paket-header">
+                        <strong>Standard</strong> - Revisi Tugas & Website sederhana
+                    </div>
+                    <div class="paket-footer">
+                        <span class="paket-harga">Rp 60.000</span>
+                        <span class="paket-durasi"><i class="fa-regular fa-clock"></i> 2-3 hari</span>
+                    </div>
+                </div>
+
+                <div class="card-paket">
+                    <div class="paket-header">
+                        <strong>Premium</strong> - Project + Database
+                    </div>
+                    <div class="paket-footer">
+                        <span class="paket-harga">Rp 150.000</span>
+                        <span class="paket-durasi"><i class="fa-regular fa-clock"></i> 3-5 hari</span>
+                    </div>
+                </div>
+
+                <h3 class="section-title" style="margin-top: 25px;">Tentang Jasa</h3>
+                <p class="tentang-text">Lagi pusing tugas coding? Error mulu pas dijalanin? Tenang, sini aku bantu.</p>
+                
+                <p class="tentang-text" style="font-weight: 600; margin-bottom: 8px;">Bisa bantu:</p>
+                <ul class="list-bisa">
+                    <li><i class="fa-regular fa-circle-check"></i> Tugas coding kampus</li>
+                    <li><i class="fa-regular fa-circle-check"></i> Fix Error Bug</li>
+                    <li><i class="fa-regular fa-circle-check"></i> Website (HTML, CSS, JS)</li>
+                    <li><i class="fa-regular fa-circle-check"></i> Python, Java C++, dll</li>
+                    <li><i class="fa-regular fa-circle-check"></i> Revisi sampe beres</li>
+                </ul>
+
+                <p class="tentang-text">Pengerjaan santai tapi tetep rapi dan tepat waktu. Bisa tanya-tanya dulu sebelum order kok!</p>
+
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="avatar-wrapper">
+                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=150&auto=format&fit=crop" class="profile-avatar" alt="Avatar">
+                            <div class="online-dot"></div>
+                        </div>
+                        <div>
+                            <h4 class="profile-name">Sagara Mahendra</h4>
+                            <p class="profile-major">Teknik Informatika</p>
+                            <div class="profile-status-badge">
+                                <i class="fa-solid fa-circle-check"></i> Top Freelancer
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div class="stat-val">4.9</div>
+                            <div class="stat-lbl">Rating</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-val">2,7k+</div>
+                            <div class="stat-lbl">Pesanan selesai</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-val">~1 jam</div>
+                            <div class="stat-lbl">Respons</div>
+                        </div>
+                    </div>
+
+                    <button class="btn-outline-profile">Kunjungi Profil</button>
+                </div>
+
+                <div class="ulasan-header">
+                    <h3 class="section-title" style="margin-bottom: 0;">Ulasan Mahasiswa</h3>
+                    <a href="#" class="btn-link-all">Lihat Semua</a>
+                </div>
+
+                <div class="ulasan-card">
+                    <div class="ulasan-user">
+                        <div class="user-info">
+                            <div class="user-initial">SN</div>
+                            <div>
+                                <h4 class="user-name">Siti Nurhaliza</h4>
+                                <p class="user-major">Sistem Informasi</p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="ulasan-comment">"fast respon parah, malem-malem masih dibantuin, makasii kak"</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <button class="btn-secondary-action"><i class="fa-solid fa-folder-plus"></i></button>
+            <button class="btn-secondary-action"><i class="fa-regular fa-comment-dots"></i></button>
+            <button class="btn-order-now">Pesan Sekarang</button>
+        </div>
+
+    </div>
+
+</body>
+</html>

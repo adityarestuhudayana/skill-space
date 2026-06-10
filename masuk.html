@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSpace - Masuk</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Pembungkus Utama (Halaman Web/Desktop) */
+        body {
+            background-color: #f4f5f9; /* Warna abu-abu terang khas Web modern */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Kartu Login (Otomatis Menyesuaikan Web & Mobile) */
+        .auth-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 400px; /* Lebar maksimal di layar desktop */
+            padding: 40px 30px;
+            border-radius: 16px; /* Sudut melengkung di desktop */
+            box-shadow: 0 10px 30px rgba(74, 58, 255, 0.08); /* Efek bayangan elegan di web */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Status bar tiruan hanya untuk estetika, default tersembunyi */
+        .status-bar {
+            display: none; 
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .status-icons i {
+            margin-left: 5px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo-icon {
+            font-size: 45px;
+            color: #4a3aff;
+            margin-bottom: 8px;
+        }
+
+        .brand-name {
+            font-size: 26px;
+            font-weight: bold;
+            color: #4a3aff;
+        }
+
+        .brand-tagline {
+            font-size: 13px;
+            color: #555;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i.prefix-icon {
+            position: absolute;
+            left: 15px;
+            color: #777;
+        }
+
+        .input-wrapper i.toggle-password {
+            position: absolute;
+            right: 15px;
+            color: #777;
+            cursor: pointer;
+        }
+
+        .input-control {
+            width: 100%;
+            background-color: #f0f2f5;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 14px 15px;
+            font-size: 14px;
+            color: #333;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .input-control:focus {
+            background-color: #ffffff;
+            border-color: #4a3aff;
+            box-shadow: 0 0 0 3px rgba(74, 58, 255, 0.15);
+        }
+
+        .input-wrapper i.prefix-icon ~ .input-control {
+            padding-left: 42px;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 8px;
+            margin-bottom: 25px;
+        }
+
+        .forgot-password a {
+            font-size: 12px;
+            color: #4a3aff;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background-color: #4a3aff;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: background 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #3525e6;
+        }
+
+        .btn-google {
+            width: 100%;
+            background-color: #ffffff;
+            color: #333;
+            border: 1px solid #dcdcdc;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            transition: background 0.2s ease;
+        }
+
+        .btn-google:hover {
+            background-color: #f8f9fa;
+        }
+
+        .btn-google img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .divider:not(:empty)::before { margin-right: .5em; }
+        .divider:not(:empty)::after { margin-left: .5em; }
+
+        .auth-footer {
+            text-align: center;
+            font-size: 13px;
+            color: #555;
+            margin-top: 15px;
+        }
+
+        .auth-footer a {
+            color: #4a3aff;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* --- RESPONSIVE ADAPTATION (MEDIA QUERIES) --- */
+
+        /* Ketika dibuka di Handphone (Layar di bawah 576px) */
+        @media (max-width: 576px) {
+            body {
+                padding: 0;
+                background-color: #ffffff; /* Samakan dengan warna kartu agar terlihat full screen */
+                align-items: flex-start; /* Konten mulai dari atas layar HP */
+            }
+
+            .auth-card {
+                max-width: 100%;
+                min-height: 100vh; /* Memenuhi layar HP dari atas ke bawah */
+                border-radius: 0; /* Hilangkan lengkungan di HP */
+                box-shadow: none; /* Hilangkan bayangan kotak di HP */
+                padding: 20px 25px;
+            }
+
+            /* Hidupkan status bar jika ingin simulasi tampilan app di HP */
+            .status-bar {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-card">
+        
+        <div class="status-bar">
+            <span>09.15</span>
+            <div class="status-icons">
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-battery-full"></i>
+            </div>
+        </div>
+
+        <div class="logo-container">
+            <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="brand-name">SkillSpace</div>
+            <div class="brand-tagline">Ubah Skill Jadi Penghasilan</div>
+        </div>
+
+        <h2 class="page-title">Masuk</h2>
+
+        <button class="btn-google">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
+            Masuk dengan Google
+        </button>
+
+        <div class="divider">Atau</div>
+
+        <form onsubmit="return false;">
+            <div class="form-group">
+                <label>Masukkan Email</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-user prefix-icon"></i>
+                    <input type="email" class="input-control" placeholder="Email" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Masukkan Kata Sandi</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-lock prefix-icon"></i>
+                    <input type="password" class="input-control" placeholder="Kata Sandi" required>
+                    <i class="fa-regular fa-eye-slash toggle-password"></i>
+                </div>
+            </div>
+
+            <div class="forgot-password">
+                <a href="#">Lupa Kata Sandi?</a>
+            </div>
+
+            <button class="btn-primary" type="submit">Masuk</button>
+        </form>
+
+        <div class="auth-footer">
+            Belum punya akun? <a href="daftar.html">Daftar</a>
+        </div>
+    </div>
+
+</body>
+</html>
