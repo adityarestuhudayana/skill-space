@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSpace - Beri Ulasan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #8e8e93; /* Latar belakang luar komputer/tablet */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container Utama (Frame HP) */
+        .app-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 390px;
+            height: 844px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        /* Header Navigasi */
+        .app-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 25px 20px 15px 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #f8f8f8;
+        }
+
+        .back-btn {
+            color: #4a3aff;
+            font-size: 20px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        /* AREA SCROLLABLE KONTEN TENGAH */
+        .scrollable-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .scrollable-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        .scrollable-content::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
+        /* Ringkasan Informasi Produk Jasa */
+        .product-summary-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .product-img {
+            width: 65px;
+            height: 65px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .product-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .product-date {
+            font-size: 11.5px;
+            color: #666;
+        }
+
+        .product-price {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #000;
+            margin-top: 2px;
+        }
+
+        /* Box Penilaian Rating Bintang */
+        .rating-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 20px 15px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .rating-box h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 4px;
+        }
+
+        .rating-box p {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .stars-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .stars-container i {
+            font-size: 26px;
+            color: #000; /* Bintang default hitam/kosong sesuai mockup */
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        /* Class bantuan ketika bintang dipilih/di-hover */
+        .stars-container i.active {
+            color: #ffb100; 
+        }
+
+        /* Form Penginputan Teks Ulasan */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 12px;
+        }
+
+        .form-group label span {
+            font-weight: normal;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .textarea-control {
+            width: 100%;
+            height: 110px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 13px;
+            color: #333;
+            outline: none;
+            resize: none;
+        }
+
+        /* Kotak Unggah Foto */
+        .upload-photo-btn {
+            width: 80px;
+            height: 80px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            cursor: pointer;
+            background: none;
+        }
+
+        .upload-photo-btn i {
+            font-size: 18px;
+        }
+
+        .upload-photo-btn span {
+            font-size: 12px;
+        }
+
+        /* AREA BOTTOM BAR (Tombol Kirim Ulasan Terkunci) */
+        .bottom-action-bar {
+            padding: 15px 20px 20px 20px;
+            background-color: #fff;
+            border-top: 1px solid #f5f5f5;
+        }
+
+        .btn-submit-review {
+            width: 100%;
+            background-color: #4a3aff;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .btn-submit-review:hover {
+            background-color: #3525e6;
+        }
+
+        /* --- MEDIA QUERIES (Sistem Otomatis Responsif Layar HP) --- */
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+                background-color: #fff;
+            }
+
+            .app-container {
+                max-width: 100%;
+                height: 100vh;
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <div class="app-header">
+            <a href="pesanan.html" class="back-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <h2 class="header-title">Beri Ulasan</h2>
+        </div>
+
+        <div class="scrollable-content">
+            
+            <div class="product-summary-card">
+                <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=150" class="product-img" alt="Bantuan Coding">
+                <div class="product-details">
+                    <h3 class="product-title">Bantuan Coding</h3>
+                    <p class="product-date">Selesai 6 Juni 2026</p>
+                    <p class="product-price">Rp 60.000</p>
+                </div>
+            </div>
+
+            <div class="rating-box">
+                <h4>Seberapa puas kamu?</h4>
+                <p>Tap bintang untuk memberi nilai</p>
+                <div class="stars-container" id="starsRow">
+                    <i class="fa-regular fa-star" onclick="setRating(1)"></i>
+                    <i class="fa-regular fa-star" onclick="setRating(2)"></i>
+                    <i class="fa-regular fa-star" onclick="setRating(3)"></i>
+                    <i class="fa-regular fa-star" onclick="setRating(4)"></i>
+                    <i class="fa-regular fa-star" onclick="setRating(5)"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Tulis ulasanmu <span>(opsional)</span></label>
+                <textarea class="textarea-control" placeholder="Bagikan pengalamanmu menggunakan jasa ini..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Upload foto hasil <span>(opsional)</span></label>
+                <button type="button" class="upload-photo-btn" onclick="alert('Membuka Galeri/Kamera...')">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Foto</span>
+                </button>
+            </div>
+
+        </div>
+
+        <div class="bottom-action-bar">
+            <button class="btn-submit-review" onclick="alert('Terima kasih! Ulasan Anda telah disimpan.')">
+                Kirim Ulasan
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        function setRating(ratingValue) {
+            const stars = document.getElementById('starsRow').getElementsByTagName('i');
+            
+            for (let i = 0; i < stars.length; i++) {
+                if (i < ratingValue) {
+                    // Mengubah bentuk menjadi bintang solid dan berwarna kuning emas
+                    stars[i].classList.remove('fa-regular');
+                    stars[i].classList.add('fa-solid', 'active');
+                } else {
+                    // Mengembalikan ke bentuk bintang outline standar hitam
+                    stars[i].classList.remove('fa-solid', 'active');
+                    stars[i].classList.add('fa-regular');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSpace - Profil Penjual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #8e8e93;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .app-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 390px;
+            height: 844px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        /* Area Konten Tengah (Scrollable) */
+        .scrollable-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px 20px;
+            background-color: #ffffff;
+        }
+
+        .scrollable-content::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        /* Card Profil Utama */
+        .profile-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 25px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.01);
+        }
+
+        .avatar-img {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 12px;
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 2px;
+        }
+
+        .profile-major {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .btn-edit-profile {
+            width: 100%;
+            background-color: #4a3aff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* List Menu Navigasi */
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #333;
+            font-size: 13.5px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .menu-item:hover {
+            background-color: #f8fafc;
+        }
+
+        .menu-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-left i {
+            font-size: 16px;
+            color: #4a3aff;
+            width: 20px;
+            text-align: center;
+        }
+
+        .menu-item.active {
+            background-color: #4a3aff;
+            border-color: #4a3aff;
+            color: #fff;
+        }
+
+        .menu-item.active .menu-left i,
+        .menu-item.active .fa-chevron-right {
+            color: #fff;
+        }
+
+        .fa-chevron-right {
+            font-size: 12px;
+            color: #a0aec0;
+        }
+
+        /* Tombol Keluar */
+        .btn-logout {
+            width: 100%;
+            background: none;
+            border: 1px solid #ff4d4f;
+            color: #ff4d4f;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            background-color: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+            color: #8c8c8c;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+        }
+
+        .nav-item.active {
+            color: #4a3aff;
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 0; background-color: #fff; }
+            .app-container { max-width: 100%; height: 100vh; border-radius: 0; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="scrollable-content">
+            
+            <div class="profile-card">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200" class="avatar-img" alt="Foto Profil">
+                <h2 class="profile-name">Sagara Mahendra</h2>
+                <p class="profile-major">Teknik Informatika</p>
+                <button class="btn-edit-profile">Edit Profile</button>
+            </div>
+
+            <div class="menu-list">
+                <a href="dashboard-penjual.html" class="menu-item active">
+                    <div class="menu-left">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                        <span>Dashboard Penjual</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-left">
+                        <i class="fa-regular fa-clipboard"></i>
+                        <span>Riwayat Pesanan</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-left">
+                        <i class="fa-regular fa-heart"></i>
+                        <span>Favorit</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-left">
+                        <i class="fa-solid fa-money-check-dollar"></i>
+                        <span>Metode Pembayaran</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-left">
+                        <i class="fa-regular fa-comment-dots"></i>
+                        <span>Pesan</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-left">
+                        <i class="fa-regular fa-circle-question"></i>
+                        <span>Bantuan</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
+
+            <button class="btn-logout">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar
+            </button>
+
+        </div>
+
+        <div class="bottom-nav">
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Beranda</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fa-regular fa-comment-dots"></i>
+                <span>Pesan</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fa-regular fa-clipboard"></i>
+                <span>Pesanan</span>
+            </a>
+            <a href="#" class="nav-item active">
+                <i class="fa-regular fa-user"></i>
+                <span>Saya</span>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

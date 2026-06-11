@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSpace - Permintaan Terkirim</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #8e8e93; /* Latar belakang luar abu-abu */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container Utama (Frame HP) */
+        .app-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 390px;
+            height: 844px;
+            padding: 50px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-radius: 16px;
+            overflow-y: auto;
+        }
+
+        /* Lingkaran Ikon Status Dokumen/Waktu */
+        .status-icon-wrapper {
+            width: 100px;
+            height: 100px;
+            background-color: #4a3aff; /* Warna ungu utama SkillSpace */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            font-size: 42px;
+            margin-top: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(74, 58, 255, 0.2);
+            position: relative;
+        }
+
+        /* Mini-icon Jam di dalam Ikon Utama */
+        .sub-icon {
+            font-size: 16px;
+            position: absolute;
+            bottom: 22px;
+            right: 22px;
+            background: #4a3aff;
+            border-radius: 50%;
+            padding: 2px;
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .page-desc {
+            font-size: 13.5px;
+            color: #555;
+            line-height: 1.5;
+            text-align: center;
+            max-width: 300px;
+            margin-bottom: 35px;
+        }
+
+        /* Card Box Detail Permintaan */
+        .detail-card {
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 40px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .card-header-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 12px;
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 12px;
+        }
+
+        .product-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .product-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .product-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .product-seller {
+            font-size: 11.5px;
+            color: #555;
+        }
+
+        .product-price {
+            font-size: 13px;
+            font-weight: 700;
+            color: #000;
+            margin-top: 2px;
+        }
+
+        /* Baris Status Badge */
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-label {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .status-badge {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #ff9800; /* Warna teks orange */
+            background-color: #fff3e0; /* Background orange transparan */
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 152, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background-color: #ff9800;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Grouping Tombol Aksi */
+        .btn-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: auto; /* Mendorong tombol otomatis ke area paling bawah kontainer */
+            padding-bottom: 10px;
+        }
+
+        /* Tombol Utama (Solid) */
+        .btn-filled {
+            width: 100%;
+            background-color: #4a3aff;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(74, 58, 255, 0.15);
+            transition: background 0.2s;
+        }
+
+        .btn-filled:hover {
+            background-color: #3525e6;
+        }
+
+        /* Tombol Sekunder (Outline) */
+        .btn-outline {
+            width: 100%;
+            background-color: #ffffff;
+            color: #4a3aff;
+            border: 1px solid #4a3aff;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(74, 58, 255, 0.04);
+        }
+
+        /* --- MEDIA QUERIES (Sistem Otomatis Responsif Layar HP) --- */
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+                background-color: #fff;
+            }
+
+            .app-container {
+                max-width: 100%;
+                height: 100vh;
+                box-shadow: none;
+                border-radius: 0;
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <div class="status-icon-wrapper">
+            <i class="fa-regular fa-clipboard"></i>
+            <i class="fa-solid fa-clock sub-icon"></i>
+        </div>
+
+        <h2 class="page-title">Permintaan Terkirim!</h2>
+        <p class="page-desc">
+            Penjual akan mengecek permintaanmu. Kamu akan mendapat notifikasi jika permintaan diterima atau ditolak.
+        </p>
+
+        <div class="detail-card">
+            <h3 class="card-header-title">Detail Permintaan</h3>
+            
+            <div class="product-info">
+                <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=150" class="product-img" alt="Bantuan Coding">
+                <div class="product-text">
+                    <span class="product-title">Bantuan Coding</span>
+                    <span class="product-seller">Oleh Sagara Mahendra</span>
+                    <span class="product-price">Rp 63.000</span>
+                </div>
+            </div>
+
+            <div class="status-row">
+                <span class="status-label">Status</span>
+                <span class="status-badge">Menunggu Persetujuan</span>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <a href="pesan-detail.html" class="btn-filled">Hubungi Penjual</a>
+            <a href="pesanan.html" class="btn-outline">Lihat Permintaan Saya</a>
+            <a href="dashboard.html" class="btn-outline">Kembali ke Beranda</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
