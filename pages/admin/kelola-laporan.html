@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Laporan - SkillSpace Admin</title>
+    <meta name="description" content="Kelola laporan masalah dan pantau performa penjual terbaik di platform SkillSpace.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ============================================
+           ADMIN KELOLA LAPORAN - SkillSpace
+           ============================================ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-50: #EEF2FF;
+            --primary-100: #E0E7FF;
+            --primary-400: #818CF8;
+            --primary-500: #6366F1;
+            --primary-600: #4F46E5;
+            --primary-700: #4338CA;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --orange: #F97316;
+            --blue: #3B82F6;
+            --sidebar-w: 240px;
+            --header-h: 64px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --transition: 0.25s ease;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 14px;
+            color: var(--gray-800);
+            background: #F5F6FA;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        button { cursor: pointer; font-family: inherit; }
+
+        /* ===========================================
+           SIDEBAR
+           =========================================== */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-w);
+            height: 100vh;
+            background: #FFFFFF;
+            border-right: 1px solid var(--gray-100);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            transition: transform var(--transition);
+        }
+
+        .sidebar__brand {
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar__logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-600);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar__logo-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .sidebar__brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar__brand-name {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary-600);
+        }
+
+        .sidebar__brand-sub {
+            font-size: 11px;
+            color: var(--gray-400);
+            font-weight: 500;
+        }
+
+        .sidebar__nav {
+            flex: 1;
+            padding: 8px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sidebar__link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+            transition: all var(--transition);
+        }
+
+        .sidebar__link:hover {
+            background: var(--gray-50);
+            color: var(--gray-800);
+        }
+
+        .sidebar__link--active {
+            background: var(--primary-600);
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+        }
+
+        .sidebar__link--active:hover {
+            background: var(--primary-700);
+            color: #fff;
+        }
+
+        .sidebar__link i {
+            width: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .sidebar__link--danger {
+            color: var(--danger);
+        }
+        .sidebar__link--danger:hover {
+            background: #FEF2F2;
+        }
+
+        /* ===========================================
+           TOP HEADER
+           =========================================== */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: var(--sidebar-w);
+            right: 0;
+            height: var(--header-h);
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            z-index: 90;
+        }
+
+        .topbar__title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .topbar__search {
+            position: relative;
+            width: 340px;
+        }
+
+        .topbar__search-input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            background: var(--gray-50);
+            font-size: 13px;
+            color: var(--gray-700);
+            outline: none;
+            transition: border-color var(--transition);
+            font-family: inherit;
+        }
+
+        .topbar__search-input::placeholder { color: var(--gray-400); }
+        .topbar__search-input:focus { border-color: var(--primary-400); background: #fff; }
+
+        .topbar__search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            font-size: 14px;
+        }
+
+        .topbar__actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .topbar__action-btn {
+            width: 38px;
+            height: 38px;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-500);
+            font-size: 18px;
+            transition: all var(--transition);
+            position: relative;
+        }
+
+        .topbar__action-btn:hover {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .topbar__avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--primary-100);
+        }
+
+        .topbar__avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===========================================
+           MAIN CONTENT
+           =========================================== */
+        .main {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--header-h);
+            padding: 28px 32px;
+            min-height: calc(100vh - var(--header-h));
+        }
+
+        /* ===========================================
+           CONTENT GRID (2 columns)
+           =========================================== */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid var(--gray-100);
+            transition: box-shadow var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card__title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .card__link {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-600);
+            transition: color var(--transition);
+        }
+
+        .card__link:hover { color: var(--primary-700); }
+
+        /* ===========================================
+           KATEGORI JASA TERLARIS (Bar Chart)
+           =========================================== */
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .category-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .category-dot--blue { background: var(--blue); }
+        .category-dot--indigo { background: var(--primary-600); }
+        .category-dot--green { background: var(--success); }
+        .category-dot--orange { background: var(--orange); }
+
+        .category-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-700);
+            min-width: 90px;
+        }
+
+        .category-bar-wrap {
+            flex: 1;
+            height: 10px;
+            background: var(--gray-100);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .category-bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.8s ease;
+        }
+
+        .category-bar-fill--blue { background: linear-gradient(90deg, #60A5FA, var(--blue)); }
+        .category-bar-fill--indigo { background: linear-gradient(90deg, var(--primary-400), #06B6D4); }
+        .category-bar-fill--green { background: linear-gradient(90deg, #34D399, var(--success)); }
+        .category-bar-fill--orange { background: linear-gradient(90deg, #FDBA74, var(--orange)); }
+
+        .category-pct {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--gray-800);
+            min-width: 48px;
+            text-align: right;
+        }
+
+        /* ===========================================
+           LAPORAN MASALAH
+           =========================================== */
+        .report-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .report-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .report-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .report-dot--orange { background: var(--orange); }
+        .report-dot--blue { background: var(--blue); }
+        .report-dot--red { background: var(--danger); }
+        .report-dot--cyan { background: #06B6D4; }
+
+        .report-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-700);
+            min-width: 155px;
+        }
+
+        .report-bar-wrap {
+            flex: 1;
+            height: 10px;
+            background: var(--gray-100);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .report-bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.8s ease;
+        }
+
+        .report-bar-fill--orange { background: linear-gradient(90deg, #FDBA74, var(--orange)); }
+        .report-bar-fill--blue { background: linear-gradient(90deg, #60A5FA, var(--blue)); }
+        .report-bar-fill--red { background: linear-gradient(90deg, #FCA5A5, var(--danger)); }
+        .report-bar-fill--cyan { background: linear-gradient(90deg, #67E8F9, #06B6D4); }
+
+        .report-count {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gray-700);
+            min-width: 70px;
+            text-align: right;
+        }
+
+        /* ===========================================
+           PERFORMA PENJUAL TABLE
+           =========================================== */
+        .seller-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .seller-table thead th {
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            padding: 12px 10px;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .seller-table tbody td {
+            padding: 12px 10px;
+            font-size: 13px;
+            color: var(--gray-700);
+            border-bottom: 1px solid var(--gray-50);
+            vertical-align: middle;
+        }
+
+        .seller-table tbody tr:hover {
+            background: var(--gray-50);
+        }
+
+        .seller-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Seller profile cell */
+        .seller-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .seller-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .seller-name {
+            font-weight: 700;
+            color: var(--gray-800);
+        }
+
+        .seller-orders {
+            font-weight: 600;
+            color: var(--gray-600);
+        }
+
+        .seller-rating {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 700;
+            color: var(--gray-800);
+        }
+
+        .seller-rating i {
+            color: #FBBF24;
+            font-size: 12px;
+        }
+
+        .seller-revenue {
+            font-weight: 700;
+            color: var(--primary-600);
+        }
+
+        /* ===========================================
+           ANIMATIONS
+           =========================================== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .content-grid .card:nth-child(1) { animation-delay: 0.05s; }
+        .content-grid .card:nth-child(2) { animation-delay: 0.1s; }
+        .content-grid .card:nth-child(3) { animation-delay: 0.15s; }
+        .content-grid .card:nth-child(4) { animation-delay: 0.2s; }
+
+        /* ===========================================
+           RESPONSIVE
+           =========================================== */
+        @media (max-width: 1200px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .topbar {
+                left: 0;
+            }
+            .main {
+                margin-left: 0;
+                padding: 20px 16px;
+            }
+            .topbar__search {
+                display: none;
+            }
+            .seller-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar__brand">
+            <div class="sidebar__logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+            </div>
+            <div class="sidebar__brand-text">
+                <span class="sidebar__brand-name">SkillSpace</span>
+                <span class="sidebar__brand-sub">Halaman Admin</span>
+            </div>
+        </div>
+
+        <nav class="sidebar__nav">
+            <a href="dashboard.html" class="sidebar__link" id="nav-dashboard">
+                <i class="fa-solid fa-table-columns"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="kelola-jasa-user.html" class="sidebar__link" id="nav-jasa-user">
+                <i class="fa-solid fa-briefcase"></i>
+                <span>Jasa & User</span>
+            </a>
+            <a href="kelola-transaksi.html" class="sidebar__link" id="nav-transaksi">
+                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                <span>Transaksi</span>
+            </a>
+            <a href="kelola-laporan.html" class="sidebar__link sidebar__link--active" id="nav-laporan">
+                <i class="fa-solid fa-flag"></i>
+                <span>Laporan</span>
+            </a>
+            <a href="#" class="sidebar__link" id="nav-pengaturan">
+                <i class="fa-solid fa-gear"></i>
+                <span>Pengaturan</span>
+            </a>
+            <a href="#" class="sidebar__link" id="nav-notifikasi">
+                <i class="fa-solid fa-bell"></i>
+                <span>Notifikasi</span>
+            </a>
+        </nav>
+
+        <div style="padding: 12px;">
+            <a href="#" class="sidebar__link sidebar__link--danger" id="nav-logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- ========== TOP HEADER ========== -->
+    <header class="topbar">
+        <h1 class="topbar__title">Kelola Laporan</h1>
+        <div class="topbar__search">
+            <i class="fa-solid fa-magnifying-glass topbar__search-icon"></i>
+            <input type="text" class="topbar__search-input" placeholder="Cari apapun.." id="search-input">
+        </div>
+        <div class="topbar__actions">
+            <button class="topbar__action-btn" id="btn-notif"><i class="fa-regular fa-bell"></i></button>
+            <button class="topbar__action-btn" id="btn-settings"><i class="fa-solid fa-gear"></i></button>
+            <div class="topbar__avatar">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=100&auto=format&fit=crop" alt="Admin Avatar">
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
+
+        <div class="content-grid">
+
+            <!-- ===== LEFT COLUMN ===== -->
+
+            <!-- Kategori Jasa Terlaris -->
+            <div class="card">
+                <div class="card__header">
+                    <h2 class="card__title">Kategori Jasa Terlaris</h2>
+                    <a href="#" class="card__link">Lihat Semua</a>
+                </div>
+                <div class="category-list">
+                    <div class="category-item">
+                        <span class="category-dot category-dot--blue"></span>
+                        <span class="category-label">Coding</span>
+                        <div class="category-bar-wrap">
+                            <div class="category-bar-fill category-bar-fill--blue" style="width:72%;"></div>
+                        </div>
+                        <span class="category-pct">72 %</span>
+                    </div>
+                    <div class="category-item">
+                        <span class="category-dot category-dot--indigo"></span>
+                        <span class="category-label">Desain</span>
+                        <div class="category-bar-wrap">
+                            <div class="category-bar-fill category-bar-fill--indigo" style="width:55%;"></div>
+                        </div>
+                        <span class="category-pct">55 %</span>
+                    </div>
+                    <div class="category-item">
+                        <span class="category-dot category-dot--green"></span>
+                        <span class="category-label">Les Privat</span>
+                        <div class="category-bar-wrap">
+                            <div class="category-bar-fill category-bar-fill--green" style="width:31%;"></div>
+                        </div>
+                        <span class="category-pct">31 %</span>
+                    </div>
+                    <div class="category-item">
+                        <span class="category-dot category-dot--orange"></span>
+                        <span class="category-label">Pengetikan</span>
+                        <div class="category-bar-wrap">
+                            <div class="category-bar-fill category-bar-fill--orange" style="width:22%;"></div>
+                        </div>
+                        <span class="category-pct">22 %</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performa Penjual Terbaik -->
+            <div class="card">
+                <div class="card__header">
+                    <h2 class="card__title">Performa Penjual Terbaik</h2>
+                    <a href="#" class="card__link">Lihat Semua</a>
+                </div>
+                <table class="seller-table" id="table-seller">
+                    <thead>
+                        <tr>
+                            <th>Penjual</th>
+                            <th>Pesanan</th>
+                            <th>Rating</th>
+                            <th>Pendapatan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="seller-profile">
+                                    <img class="seller-avatar" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=100&auto=format&fit=crop" alt="Avatar">
+                                    <span class="seller-name">Sagara Mahendra</span>
+                                </div>
+                            </td>
+                            <td class="seller-orders">2,7k+</td>
+                            <td><span class="seller-rating"><i class="fa-solid fa-star"></i> 4.9</span></td>
+                            <td class="seller-revenue">Rp 1.2 jt</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="seller-profile">
+                                    <img class="seller-avatar" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=100&auto=format&fit=crop" alt="Avatar">
+                                    <span class="seller-name">Sagara Mahendra</span>
+                                </div>
+                            </td>
+                            <td class="seller-orders">2,7k+</td>
+                            <td><span class="seller-rating"><i class="fa-solid fa-star"></i> 4.9</span></td>
+                            <td class="seller-revenue">Rp 1.2 jt</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="seller-profile">
+                                    <img class="seller-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" alt="Avatar">
+                                    <span class="seller-name">Xabiru Galaska</span>
+                                </div>
+                            </td>
+                            <td class="seller-orders">2,3k+</td>
+                            <td><span class="seller-rating"><i class="fa-solid fa-star"></i> 5.0</span></td>
+                            <td class="seller-revenue">Rp 920rb</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="seller-profile">
+                                    <img class="seller-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" alt="Avatar">
+                                    <span class="seller-name">Xabiru Galaska</span>
+                                </div>
+                            </td>
+                            <td class="seller-orders">2,3k+</td>
+                            <td><span class="seller-rating"><i class="fa-solid fa-star"></i> 5.0</span></td>
+                            <td class="seller-revenue">Rp 920rb</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="seller-profile">
+                                    <img class="seller-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop" alt="Avatar">
+                                    <span class="seller-name">Carmenita</span>
+                                </div>
+                            </td>
+                            <td class="seller-orders">1,9k+</td>
+                            <td><span class="seller-rating"><i class="fa-solid fa-star"></i> 4.8</span></td>
+                            <td class="seller-revenue">Rp 760rb</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="seller-profile">
+                                    <img class="seller-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop" alt="Avatar">
+                                    <span class="seller-name">Carmenita</span>
+                                </div>
+                            </td>
+                            <td class="seller-orders">1,9k+</td>
+                            <td><span class="seller-rating"><i class="fa-solid fa-star"></i> 4.8</span></td>
+                            <td class="seller-revenue">Rp 760rb</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="seller-profile">
+                                    <img class="seller-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop" alt="Avatar">
+                                    <span class="seller-name">Carmenita</span>
+                                </div>
+                            </td>
+                            <td class="seller-orders">1,9k+</td>
+                            <td><span class="seller-rating"><i class="fa-solid fa-star"></i> 4.8</span></td>
+                            <td class="seller-revenue">Rp 760rb</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Laporan Masalah -->
+            <div class="card">
+                <div class="card__header">
+                    <h2 class="card__title">Laporan Masalah</h2>
+                    <a href="#" class="card__link">Lihat Semua</a>
+                </div>
+                <div class="report-list">
+                    <div class="report-item">
+                        <span class="report-dot report-dot--orange"></span>
+                        <span class="report-label">Hasil tidak sesuai</span>
+                        <div class="report-bar-wrap">
+                            <div class="report-bar-fill report-bar-fill--orange" style="width:65%;"></div>
+                        </div>
+                        <span class="report-count">32 Kasus</span>
+                    </div>
+                    <div class="report-item">
+                        <span class="report-dot report-dot--blue"></span>
+                        <span class="report-label">Pengiriman terlambat</span>
+                        <div class="report-bar-wrap">
+                            <div class="report-bar-fill report-bar-fill--blue" style="width:48%;"></div>
+                        </div>
+                        <span class="report-count">24 Kasus</span>
+                    </div>
+                    <div class="report-item">
+                        <span class="report-dot report-dot--red"></span>
+                        <span class="report-label">Penipuan</span>
+                        <div class="report-bar-wrap">
+                            <div class="report-bar-fill report-bar-fill--red" style="width:24%;"></div>
+                        </div>
+                        <span class="report-count">12 Kasus</span>
+                    </div>
+                    <div class="report-item">
+                        <span class="report-dot report-dot--cyan"></span>
+                        <span class="report-label">Komunikasi buruk</span>
+                        <div class="report-bar-wrap">
+                            <div class="report-bar-fill report-bar-fill--cyan" style="width:18%;"></div>
+                        </div>
+                        <span class="report-count">9 Kasus</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
